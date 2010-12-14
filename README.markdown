@@ -28,7 +28,7 @@ Add the following inside `components`.
 
 USAGE
 ------
-fixture [load]
+fixture load [--alias=folderalias] --table=tablename1[,tablename2[,...]]
 
 PARAMETERS
 -----------
