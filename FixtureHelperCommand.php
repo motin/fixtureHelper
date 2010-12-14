@@ -1,4 +1,13 @@
 <?php
+/**
+ * FixtureHelper is a command application lets you work with your fixtures outside 
+ * testing. Currently what it does is just helping you to load you fixtures from your
+ * fixture files to your database, without the need to invoke PHPUnit.
+ * 
+ * @author Sum-Wai Low
+ * @link https://github.com/sumwai/fixtureHelper
+ * @copyright Copyright &copy; 2010 Sum-Wai Low
+ */
 class FixtureHelperCommand extends CConsoleCommand {
 	private $fixture;
 	function getHelp() {
