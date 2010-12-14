@@ -13,7 +13,7 @@ class FixtureHelperCommand extends CConsoleCommand {
 	function getHelp() {
 		return <<<EOD
 USAGE
-  fixture [load]
+  fixture load [--alias=folderalias] --table=tablename1[,tablename2[,...]]
 	
 DESCRIPTION
   This command lets you work with your fixtures outside testing
@@ -21,10 +21,10 @@ DESCRIPTION
 PARAMETERS
   * load: Load fixtures into the database
   * --alias: The alias to the directory that contains "models" and "tests" 
-    folders. Please note that folder "models" should contain the Model class of 
-    the fixtures to be loaded. Defaults to "application". Optional for "load".
+	folders. Please note that folder "models" should contain the Model class of 
+	the fixtures to be loaded. Defaults to "application". Optional for "load".
   * --tables: Name of the tables to be loaded with your defined fixtures. Name  
-    values are comma separated. Required for "load".  
+	values are comma separated. Required for "load".  
 	
 EXAMPLES
   yiic fixture load --alias=application.modules.mymodule --tables=fruit,transport,country
