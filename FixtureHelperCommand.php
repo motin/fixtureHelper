@@ -38,7 +38,7 @@ EOD;
 	 * @param string $alias alias to the path that contains both models and tests folders
 	 * @param string $tables comma separated value of table names that should be loaded with fixtures
 	 */
-	function actionLoad($alias='application', $tables){
+	function actionLoad($tables, $alias='application'){
 		Yii::import($alias.'.models.*');
 		$this->fixture = Yii::app()->getComponent('fixture');
 		$this->fixture->basePath = Yii::getPathOfAlias($alias.'.tests.fixtures');
