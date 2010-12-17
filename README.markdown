@@ -2,7 +2,7 @@ FixtureHelper for Yii Framework
 ===============================
 
 FixtureHelper is a command application lets you work with your fixtures outside 
-testing. Currently what it does is just helping you to load you fixtures from your
+testing. Currently what it does is just helping you to load your fixtures from your
 fixture files to your database, without the need to invoke PHPUnit.
 
 INSTALL
@@ -41,5 +41,4 @@ PARAMETERS
   
 EXAMPLES
 --------
-
 	yiic fixture load --alias=application.modules.mymodule --tables=fruit,transport,country
