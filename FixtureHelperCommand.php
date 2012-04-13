@@ -47,7 +47,7 @@ EOD;
         $this->fixture           = Yii::app()->getComponent('fixture');
         $this->fixture->basePath = Yii::getPathOfAlias($alias . '.tests.fixtures');
         $this->fixture->init();
-
+        $this->fixture->checkIntegrity(false);
         if ($tables === '*') {
             $this->fixture->prepare();
         } else {
@@ -62,7 +62,7 @@ EOD;
                 }
             }
         }
-
+        $this->fixture->checkIntegrity(true);
         echo "Done.\n\n";
     }
 
