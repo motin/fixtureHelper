@@ -67,24 +67,27 @@ EOD;
             $fixturePathAlias = $this->defaultFixturePathAlias;
         }
         Yii::import($modelPathAlias . '.*');
-        $this->fixture = Yii::app()->getComponent('fixture');
+        $this->fixture = Yii::app()->getComponent('fixture-helper');
         $this->fixture->basePath = Yii::getPathOfAlias($fixturePathAlias);
-        $this->fixture->init();
         $this->fixture->checkIntegrity(false);
         if ($tables === '*') {
-            $this->fixture->prepare();
+            $tables = array();
+            foreach ($this->fixture->getFixtures() as $tableName => $fixturePath) {
+                $tables[] = $tableName;
+            }
         } else {
             $tables = explode(',', $tables);
+        }
 
-            foreach ($tables as $table) {
-                try {
-                    $this->fixture->resetTable($table);
-                    $this->fixture->loadFixture($table);
-                } catch (Exception $e) {
-                    echo "ERROR: There is a problem working with the table $table. " . "Is it spelled correctly or exist?\n\n";
-                }
+        foreach ($tables as $table) {
+            try {
+                $this->fixture->resetTable($table);
+                $this->fixture->loadFixture($table);
+            } catch (Exception $e) {
+                echo "ERROR: There is a problem working with the table $table. " . "Is it spelled correctly or exist?\n\n";
             }
         }
+
         $this->fixture->checkIntegrity(true);
         echo "Done.\n\n";
     }
