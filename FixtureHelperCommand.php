@@ -1,4 +1,5 @@
 <?php
+
 /**
  * FixtureHelper is a command application lets you work with your fixtures outside
  * testing. Currently what it does is just helping you to load you fixtures from your
@@ -8,10 +9,12 @@
  * @link      https://github.com/sumwai/fixtureHelper
  * @copyright Copyright &copy; 2010 Sum-Wai Low
  */
-class FixtureHelperCommand extends CConsoleCommand {
+class FixtureHelperCommand extends CConsoleCommand
+{
     private $fixture;
 
-    function getHelp() {
+    function getHelp()
+    {
         return <<<EOD
 USAGE
   fixture load [--alias=folderalias] --table=tablename1[,tablename2[,...]]
@@ -37,14 +40,15 @@ EOD;
     /**
      * Loads fixtures into the database tables from fixtures.
      *
-     * @param string $alias  alias to the path that contains both models and tests folders
+     * @param string $alias alias to the path that contains both models and tests folders
      * @param string $tables comma separated value of table names that should be loaded with fixtures,
      *                       or '*' if all fixtures should be loaded. Also calling actionLoad() without any arguments
      *                       is possible to load all fixtures.
      */
-    function actionLoad($tables = '*', $alias = 'application') {
+    function actionLoad($tables = '*', $alias = 'application')
+    {
         Yii::import($alias . '.models.*');
-        $this->fixture           = Yii::app()->getComponent('fixture');
+        $this->fixture = Yii::app()->getComponent('fixture');
         $this->fixture->basePath = Yii::getPathOfAlias($alias . '.tests.fixtures');
         $this->fixture->init();
         $this->fixture->checkIntegrity(false);
