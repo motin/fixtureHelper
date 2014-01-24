@@ -1,0 +1,15 @@
+{
+    "name": "sumwai/yii-fixture-helper",
+    "description": "FixtureHelper is a command application lets you work with your fixtures outside testing.",
+    "authors": [
+        {
+            "name": "Sum-Wai Low"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.0"
+    },
+    "autoload": {
+        "classmap": ["."]
+    }
+}
