@@ -6,32 +6,45 @@
  * fixture files to your database, without the need to invoke PHPUnit.
  *
  * @author    Sum-Wai Low
+ * @author    Fredrik Wollsén <fredrik@neam.se>
  * @link      https://github.com/sumwai/fixtureHelper
- * @copyright Copyright &copy; 2010 Sum-Wai Low
+ * @copyright Copyright &copy; 2010 Sum-Wai Low, Fredrik Wollsén <fredrik@neam.se>
  */
 class FixtureHelperCommand extends CConsoleCommand
 {
+
+    /**
+     * @var string
+     */
+    public $defaultModelPathAlias = 'application.models';
+
+    /**
+     * @var string
+     */
+    public $defaultFixturePathAlias = 'application.tests.fixtures';
+
     private $fixture;
 
     function getHelp()
     {
         return <<<EOD
 USAGE
-  fixture load [--alias=folderalias] --table=tablename1[,tablename2[,...]]
+  fixture load [--modelPathAlias=folderalias] [--fixturePathAlias=folderalias] --table=tablename1[,tablename2[,...]]
 	
 DESCRIPTION
   This command lets you work with your fixtures outside testing
 	
 PARAMETERS
   * load: Load fixtures into the database
-  * --alias: The alias to the directory that contains "models" and "tests" 
-	folders. Please note that folder "models" should contain the Model class of 
-	the fixtures to be loaded. Defaults to "application". Optional for "load".
-  * --tables: Name of the tables to be loaded with your defined fixtures. Name  
+  * --modelPathAlias: The alias to the directory that contains the "model" folder
+	Please note that folder "models" should contain the Model class of
+	the fixtures to be loaded. Defaults to "application.models". Optional for "load".
+  * --fixturePathAlias: The alias to the "fixtures" directory
+  * --tables: Name of the tables to be loaded with your defined fixtures. Name
 	values are comma separated. Required for "load".  
 	
 EXAMPLES
-  yiic fixture load --alias=application.modules.mymodule --tables=fruit,transport,country
+  yiic fixture load --modelPathAlias=application.modules.mymodule.models --fixturePathAlias=application.modules.mymodule.tests.fixtures --tables=fruit,transport,country
 
 
 EOD;
@@ -40,16 +53,22 @@ EOD;
     /**
      * Loads fixtures into the database tables from fixtures.
      *
-     * @param string $alias alias to the path that contains both models and tests folders
+     * @param string $fixturePathAlias alias to the "fixtures" directory
      * @param string $tables comma separated value of table names that should be loaded with fixtures,
      *                       or '*' if all fixtures should be loaded. Also calling actionLoad() without any arguments
      *                       is possible to load all fixtures.
      */
-    function actionLoad($tables = '*', $alias = 'application')
+    function actionLoad($tables = '*', $modelPathAlias = null, $fixturePathAlias = null)
     {
-        Yii::import($alias . '.models.*');
+        if (is_null($modelPathAlias)) {
+            $modelPathAlias = $this->defaultModelPathAlias;
+        }
+        if (is_null($fixturePathAlias)) {
+            $fixturePathAlias = $this->defaultFixturePathAlias;
+        }
+        Yii::import($modelPathAlias . '.*');
         $this->fixture = Yii::app()->getComponent('fixture');
-        $this->fixture->basePath = Yii::getPathOfAlias($alias . '.tests.fixtures');
+        $this->fixture->basePath = Yii::getPathOfAlias($fixturePathAlias);
         $this->fixture->init();
         $this->fixture->checkIntegrity(false);
         if ($tables === '*') {
