@@ -58,7 +58,7 @@ EOD;
      *                       or '*' if all fixtures should be loaded. Also calling actionLoad() without any arguments
      *                       is possible to load all fixtures.
      */
-    function actionLoad($tables = '*', $modelPathAlias = null, $fixturePathAlias = null)
+    function actionLoad($tables = '*', $modelPathAlias = null, $fixturePathAlias = null, $connectionID = "db")
     {
         if (is_null($modelPathAlias)) {
             $modelPathAlias = $this->defaultModelPathAlias;
@@ -68,6 +68,7 @@ EOD;
         }
         Yii::import($modelPathAlias . '.*');
         $this->fixture = Yii::app()->getComponent('fixture-helper');
+        $this->fixture->connectionID = $connectionID;
         $this->fixture->basePath = Yii::getPathOfAlias($fixturePathAlias);
         $this->fixture->checkIntegrity(false);
         if ($tables === '*') {
